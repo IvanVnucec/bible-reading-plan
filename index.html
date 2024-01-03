@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblija365</title>
+</head>
+<body>
+    <h1>Biblija365</h1>
+    <div>Plan čitanja Biblije kroz čitavu godinu.</div>
+
+    <figure id="figure">
+        <figcaption>Poslušajte današnje čitanje:</figcaption>
+        <audio controls id="audio"></audio>
+    </figure>
+
+    <div>
+        <small>Dohvaćeno sa <a href="https://www.radiomarija.hr">radiomarija.hr</a>.</small>
+    </div>
+    <div>
+        <small>Made by: <a href="https://github.com/IvanVnucec">Ivan Vnučec</a>, 2024.</small>
+    </div>
+
+    <script>
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+
+        if (month == 2 && day == 29) {
+            document.getElementById('figure').innerHTML = `<p>Obavijest: za današnji dan ne postoji snimljeno čitanje.</p>`;
+        } else {
+            const month_str = String(month).padStart(2, '0');
+            const day_str = String(day).padStart(2, '0');
+            const src = `https://www.radiomarija.hr/arhiva/biblija365/biblija2022${month_str}${day_str}.mp3`;
+            document.getElementById('audio').src = src;
+            document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
+        }
+    </script>
+</body>
+</html>
