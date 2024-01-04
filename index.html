@@ -41,14 +41,17 @@
             return dayOfYear;
         }
 
-        function convertDayOfYearToDate(dayOfYear) {
+        function constructSourceUrl(dayOfYear) {
             const start = new Date(2022, 0, 0);
             const diff = dayOfYear * 24 * 60 * 60 * 1000;
-            return new Date(start.getTime() + diff);
+            const date = new Date(start.getTime() + diff);
+            const monthStr = String(date.getMonth() + 1).padStart(2, '0');
+            const dayStr = String(date.getDate()).padStart(2, '0');
+            return `https://www.radiomarija.hr/arhiva/biblija365/biblija2022${monthStr}${dayStr}.mp3`
         }
 
         function onLoad() {
-            dayOfYear = getDayOfTheYear(new Date());
+            var dayOfYear = getDayOfTheYear(new Date());
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('day')) {
                 const dayParsed = parseInt(urlParams.get('day'));
@@ -57,19 +60,9 @@
                 }
             }
             document.getElementById('day_of_year').innerText = `Dan ${dayOfYear}:`;
-
-            const day = convertDayOfYearToDate(dayOfYear);
-            const month = day.getMonth() + 1;
-            const date = day.getDate();
-            if (month === 2 && date === 29) {
-                document.getElementById('figure').innerHTML = `<p>Obavijest: za današnji dan ne postoji snimljeno čitanje.</p>`;
-            } else {
-                const monthStr = String(month).padStart(2, '0');
-                const dateStr = String(date).padStart(2, '0');
-                const src = `https://www.radiomarija.hr/arhiva/biblija365/biblija2022${monthStr}${dateStr}.mp3`;
-                document.getElementById('audio').src = src;
-                document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
-            }
+            const src = constructSourceUrl(dayOfYear);
+            document.getElementById('audio').src = src;
+            document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
         }
 
         window.onload = onLoad;
