@@ -7,8 +7,8 @@
 </head>
 <body>
     <h1>Biblija365</h1>
-    <div>Plan čitanja Biblije kroz čitavu godinu u glasovnom obliku.</div>
-    <h2 id="day_of_year">Dan X:</h2>
+    <p>Plan čitanja Biblije kroz čitavu godinu u glasovnom obliku.</p>
+    <h2 id="day_of_year"></h2>
 
     <figure id="figure">
         <figcaption>Poslušajte današnje čitanje:</figcaption>
@@ -41,19 +41,32 @@
             return dayOfYear;
         }
 
+        function convertDayOfYearToDate(dayOfYear) {
+            const start = new Date(2022, 0, 0);
+            const diff = dayOfYear * 24 * 60 * 60 * 1000;
+            return new Date(start.getTime() + diff);
+        }
+
         function onLoad() {
-            const now = new Date();
-            const dayOfYear = getDayOfTheYear(now);
+            dayOfYear = getDayOfTheYear(new Date());
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('day')) {
+                const dayParsed = parseInt(urlParams.get('day'));
+                if (dayParsed > 0 && dayParsed < 366) {
+                    dayOfYear = dayParsed;
+                }
+            }
             document.getElementById('day_of_year').innerText = `Dan ${dayOfYear}:`;
 
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            if (month === 2 && day === 29) {
+            const day = convertDayOfYearToDate(dayOfYear);
+            const month = day.getMonth() + 1;
+            const date = day.getDate();
+            if (month === 2 && date === 29) {
                 document.getElementById('figure').innerHTML = `<p>Obavijest: za današnji dan ne postoji snimljeno čitanje.</p>`;
             } else {
                 const monthStr = String(month).padStart(2, '0');
-                const dayStr = String(day).padStart(2, '0');
-                const src = `https://www.radiomarija.hr/arhiva/biblija365/biblija2022${monthStr}${dayStr}.mp3`;
+                const dateStr = String(date).padStart(2, '0');
+                const src = `https://www.radiomarija.hr/arhiva/biblija365/biblija2022${monthStr}${dateStr}.mp3`;
                 document.getElementById('audio').src = src;
                 document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
             }
