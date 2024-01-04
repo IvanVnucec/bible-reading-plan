@@ -15,6 +15,8 @@
         <audio controls id="audio"></audio>
     </figure>
 
+    <p id="pagination"></p>
+
     <div>
         <small>Dohvaćeno sa <a href="https://www.radiomarija.hr">radiomarija.hr</a>.</small>
     </div>
@@ -63,6 +65,19 @@
             const src = constructSourceUrl(dayOfYear);
             document.getElementById('audio').src = src;
             document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
+
+            // pagination
+            buttons = ""
+            if (dayOfYear > 1) {
+                buttons += `<button onclick="window.location.href='?day=${dayOfYear-1}'">Prethodni dan</button>`;
+            }
+            if (dayOfYear > 1 && dayOfYear < 365) {
+                buttons += " "
+            }
+            if (dayOfYear < 365) {
+                buttons += `<button onclick="window.location.href='?day=${dayOfYear+1}'">Sljedeći dan</button>`;
+            }
+            document.getElementById('pagination').innerHTML = buttons;
         }
 
         window.onload = onLoad;
