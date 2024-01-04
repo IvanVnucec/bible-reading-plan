@@ -67,17 +67,11 @@
             document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
 
             // pagination
-            buttons = ""
-            if (dayOfYear > 1) {
-                buttons += `<button onclick="window.location.href='?day=${dayOfYear-1}'">Prethodni dan</button>`;
-            }
-            if (dayOfYear > 1 && dayOfYear < 365) {
-                buttons += " "
-            }
-            if (dayOfYear < 365) {
-                buttons += `<button onclick="window.location.href='?day=${dayOfYear+1}'">Sljedeći dan</button>`;
-            }
-            document.getElementById('pagination').innerHTML = buttons;
+            document.getElementById('pagination').innerHTML = `
+                <a href="?day=${dayOfYear > 1 ? dayOfYear-1 : 1}">Prethodni dan</a>
+                |
+                <a href="?day=${dayOfYear < 365 ? dayOfYear+1 : 365}">Slijedeći dan</a>
+            `;
         }
 
         window.onload = onLoad;
