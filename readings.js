@@ -360,7 +360,7 @@ const readingsList = [
     "1 Pt 1-5",
     "2 Pt 1-3",
     "1 Iv 1-5",
-    "2 Iv 1-3, Iv 1-Jd 1",
+    "2 Iv 1; 3 Iv 1; Jd 1",
     "Otk 1-7",
     "Otk 8-15",
     "Otk 16-22",

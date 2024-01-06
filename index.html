@@ -10,7 +10,7 @@
     <h1>Biblija365</h1>
     <p>Plan čitanja Biblije kroz čitavu godinu u glasovnom obliku.</p>
     <h2 id="day_of_year"></h2>
-    <figure>Izvor: <cite id="reading"></cite></figure>
+    <figure>Izvor: <cite><a id="reading" target="_blank"></a></cite></figure>
     <figure id="figure">
         <figcaption>Poslušajte čitanje:</figcaption>
         <audio id="audio" controls preload="metadata"></audio>
@@ -48,7 +48,7 @@
             const date = new Date(start.getTime() + diff);
             const monthStr = String(date.getMonth() + 1).padStart(2, '0');
             const dayStr = String(date.getDate()).padStart(2, '0');
-            return `recordings/biblija2022${monthStr}${dayStr}.mp3`
+            return `recordings/biblija2022${monthStr}${dayStr}.mp3`;
         }
 
         function onLoad() {
@@ -61,7 +61,11 @@
                 }
             }
             document.getElementById('day_of_year').innerText = `Dan ${dayOfYear}:`;
-            document.getElementById('reading').innerText = readingsList[dayOfYear-1];
+
+            const reading = readingsList[dayOfYear-1];
+            document.getElementById('reading').innerText = reading;
+            document.getElementById('reading').href = `https://www.biblija.net/biblija.cgi?Bible=Bible&m=${reading}&id40=1&set=1&l=en`;
+
             const src = constructSourceUrl(dayOfYear);
             document.getElementById('audio').src = src;
             document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
