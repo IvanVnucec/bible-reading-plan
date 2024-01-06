@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblija365</title>
+    <script src="readings.js"></script>
 </head>
 <body>
     <h1>Biblija365</h1>
     <p>Plan čitanja Biblije kroz čitavu godinu u glasovnom obliku.</p>
     <h2 id="day_of_year"></h2>
-
+    <figure>Izvor: <cite id="reading"></cite></figure>
     <figure id="figure">
         <figcaption>Poslušajte čitanje:</figcaption>
         <audio id="audio" controls preload="metadata"></audio>
     </figure>
-
     <p id="pagination"></p>
-
     <div>
         <small>Preuzeto sa: <a href="https://www.radiomarija.hr">radiomarija.hr</a>.</small>
     </div>
@@ -62,6 +61,7 @@
                 }
             }
             document.getElementById('day_of_year').innerText = `Dan ${dayOfYear}:`;
+            document.getElementById('reading').innerText = readingsList[dayOfYear-1];
             const src = constructSourceUrl(dayOfYear);
             document.getElementById('audio').src = src;
             document.getElementById('audio').innerHTML = `<p>Preuzmi <a href="${src}">MP3</a> audio datoteku.</p>`;
